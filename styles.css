@@ -1,0 +1,40 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+}
+
+h1 {
+  margin-top: 20px;
+  color: #333;
+}
+
+video {
+  width: 80%;
+  max-width: 640px;
+  margin: 20px auto;
+  display: block;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background-color: #000;
+}
+
+.controls {
+  margin-top: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
