@@ -42,19 +42,6 @@ async function populateCameraOptions() {
     .join('');
 }
 
-// Отправка видео на сервер
-async function uploadVideo(blob) {
-  statusDiv.textContent = 'Uploading video...';
-
-  // Заглушка вместо реальной загрузки
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  statusDiv.textContent = 'Upload complete!';
-}
-
-// Инициализация камеры по умолчанию
-populateCameraOptions().then(() => startCamera());
-
 // Событие на смену камеры
 cameraSelect.addEventListener('change', async () => {
   const selectedCameraId = cameraSelect.value;
@@ -72,10 +59,16 @@ startButton.addEventListener('click', () => {
     }
   };
 
-  mediaRecorder.onstop = async () => {
-    const blob = new Blob(recordedChunks, { type: 'video/webm' });
+  mediaRecorder.onstart = () => {
+    statusDiv.textContent = 'Recording...';
+    statusDiv.style.color = 'red';
+  };
 
-    // Отправка видео
+  mediaRecorder.onstop = async () => {
+    statusDiv.textContent = 'Recording stopped';
+    statusDiv.style.color = 'black';
+
+    const blob = new Blob(recordedChunks, { type: 'video/webm' });
     await uploadVideo(blob);
   };
 
@@ -90,3 +83,13 @@ stopButton.addEventListener('click', () => {
   startButton.disabled = false;
   stopButton.disabled = true;
 });
+
+// Заглушка для отправки данных
+async function uploadVideo(blob) {
+  statusDiv.textContent = 'Uploading video...';
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+  statusDiv.textContent = 'Upload complete!';
+}
+
+// Инициализация
+populateCameraOptions().then(() => startCamera());
